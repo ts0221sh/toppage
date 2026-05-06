@@ -17,11 +17,8 @@
     --accent2: #e879f9;
     --text: #f0e6ff;
     --sub: rgba(200, 170, 255, 0.45);
-    --glow: rgba(192, 132, 252, 0.15);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: var(--bg);
     color: var(--text);
@@ -31,248 +28,249 @@
     position: relative;
     overflow-x: hidden;
   }
-
-  /* 背景の光彩 */
   body::before {
     content: '';
     position: fixed;
-    top: -200px;
-    left: 50%;
+    top: -200px; left: 50%;
     transform: translateX(-50%);
-    width: 800px;
-    height: 600px;
-    background: radial-gradient(ellipse, rgba(168, 85, 247, 0.18) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+    width: 800px; height: 600px;
+    background: radial-gradient(ellipse, rgba(168,85,247,0.18) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
   }
-
   body::after {
     content: '';
     position: fixed;
-    bottom: -100px;
-    right: -100px;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(ellipse, rgba(232, 121, 249, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+    bottom: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(232,121,249,0.1) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
   }
-
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ヘッダー */
-  header {
-    margin-bottom: 64px;
-    text-align: center;
-  }
-
+  .container { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+  header { margin-bottom: 64px; text-align: center; }
   .pan-icon {
-    font-size: 48px;
-    display: block;
-    margin-bottom: 16px;
-    filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.5));
+    font-size: 48px; display: block; margin-bottom: 16px;
+    filter: drop-shadow(0 0 20px rgba(192,132,252,0.5));
     animation: float 4s ease-in-out infinite;
+    cursor: pointer; user-select: none;
   }
-
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
   }
-
+  .pan-icon.tapped { animation: shake 0.2s ease; }
+  @keyframes shake {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(15deg); }
+  }
   h1 {
-    font-size: clamp(28px, 7vw, 52px);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    font-size: clamp(28px, 7vw, 52px); font-weight: 900;
+    letter-spacing: -0.03em; line-height: 1.1;
     background: linear-gradient(135deg, #e879f9 0%, #c084fc 40%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.3));
+    filter: drop-shadow(0 0 30px rgba(192,132,252,0.3));
   }
-
-  .subtitle {
-    margin-top: 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--sub);
-    letter-spacing: 0.15em;
-  }
-
-  /* カード一覧 */
-  .links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  .links { display: flex; flex-direction: column; gap: 10px; }
   a.card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 22px 28px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    text-decoration: none;
-    color: var(--text);
-    backdrop-filter: blur(12px);
-    transition: all 0.2s ease;
-    gap: 16px;
-    position: relative;
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; text-decoration: none; color: var(--text);
+    backdrop-filter: blur(12px); transition: all 0.2s ease;
+    gap: 16px; position: relative; overflow: hidden;
   }
-
   a.card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(232, 121, 249, 0.06) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.2s;
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(232,121,249,0.06) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.2s;
   }
-
-  a.card:hover {
-    background: var(--surface-hover);
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(200, 150, 255, 0.1);
-  }
-
+  a.card:hover { background: var(--surface-hover); border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(168,85,247,0.2); }
   a.card:hover::before { opacity: 1; }
+  a.card.private { border-color: rgba(232,121,249,0.4); }
+  a.card.private .card-name::after { content: ' 🔓'; font-size: 12px; opacity: 0.6; }
+  .card-name { font-size: 16px; font-weight: 700; letter-spacing: 0.01em; }
+  .card-arrow { font-family: 'Space Mono', monospace; font-size: 16px; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+  a.card:hover .card-arrow { transform: translateX(5px); color: var(--accent2); }
+  .status { text-align: center; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--sub); padding: 40px 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1.2s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes blink { 0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent); } 50% { opacity: 0.2; box-shadow: none; } }
+  footer { margin-top: 48px; text-align: center; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--sub); border-top: 1px solid var(--border); padding-top: 24px; }
+  .card { opacity: 0; transform: translateY(16px); animation: fadeUp 0.4s ease forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-  .card-name {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
+  /* パスワードモーダル */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+    z-index: 100; align-items: center; justify-content: center;
   }
-
-  .card-arrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    color: var(--accent);
-    flex-shrink: 0;
-    transition: transform 0.2s;
-  }
-
-  a.card:hover .card-arrow {
-    transform: translateX(5px);
-    color: var(--accent2);
-  }
-
-  /* ステータス */
-  .status {
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #1e0f35; border: 1px solid rgba(192,132,252,0.4);
+    border-radius: 16px; padding: 32px 28px; width: min(360px, 90vw);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(168,85,247,0.15);
     text-align: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--sub);
-    padding: 40px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
   }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: blink 1.2s ease-in-out infinite;
-    flex-shrink: 0;
+  .modal h2 { font-size: 20px; margin-bottom: 8px; }
+  .modal p { font-size: 13px; color: var(--sub); margin-bottom: 20px; }
+  .modal input {
+    width: 100%; padding: 12px 16px; font-size: 16px; letter-spacing: 0.1em;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(192,132,252,0.3);
+    border-radius: 8px; color: var(--text); outline: none;
+    font-family: 'Space Mono', monospace; text-align: center;
+    transition: border-color 0.2s;
   }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent); }
-    50% { opacity: 0.2; box-shadow: none; }
+  .modal input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(192,132,252,0.15); }
+  .modal-btns { display: flex; gap: 8px; margin-top: 16px; }
+  .modal-btns button {
+    flex: 1; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; font-family: inherit;
   }
-
-  /* フッター */
-  footer {
-    margin-top: 48px;
-    text-align: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--sub);
-    border-top: 1px solid var(--border);
-    padding-top: 24px;
-  }
-
-  /* カード入場アニメ */
-  .card {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: fadeUp 0.4s ease forwards;
-  }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .btn-cancel { background: rgba(255,255,255,0.08); color: var(--sub); }
+  .btn-cancel:hover { background: rgba(255,255,255,0.12); }
+  .btn-ok { background: linear-gradient(135deg, #a855f7, #e879f9); color: #fff; }
+  .btn-ok:hover { opacity: 0.9; }
+  .modal-error { font-size: 12px; color: #f87171; margin-top: 10px; min-height: 18px; }
 </style>
 </head>
 <body>
 <div class="container">
-
   <header>
-    <span class="pan-icon">🍳</span>
+    <span class="pan-icon" id="panIcon">🍳</span>
     <h1>フライパンツール一覧</h1>
-
   </header>
-
-  <div class="status" id="status">
-    <span class="dot"></span>
-    <span>読み込み中...</span>
-  </div>
-
+  <div class="status" id="status"><span class="dot"></span><span>読み込み中...</span></div>
   <div class="links" id="links"></div>
-
   <footer id="footer"></footer>
-
 </div>
-<script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxWzBIuP0aClEnP45jPjG2dxBigWqwbgBCACRqKHWgYGDMJQ_OMrwIWF8XbKxBHWmY16w/exec";
 
-async function load() {
-  const status = document.getElementById("status");
-  const linksEl = document.getElementById("links");
-  const footer = document.getElementById("footer");
+<!-- パスワードモーダル -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>🔐 パスワード</h2>
+    <p>パスワードを入力してください</p>
+    <input type="password" id="passInput" placeholder="••••••••" autocomplete="off">
+    <div class="modal-error" id="modalError"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">キャンセル</button>
+      <button class="btn-ok" onclick="submitPassword()">解錠</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwgbICj73MF_Ebdk6HKaSXGzItFtEFN4Zo2Z0-tH8F_pFeF_FMcEqdHYYXPlUimOXvhJQ/exec";
+
+let tapCount = 0;
+let tapTimer = null;
+let currentPass = localStorage.getItem('frypan_pass') || '';
+
+// JSONP
+function fetchGAS(params) {
+  return new Promise((resolve, reject) => {
+    const cb = '__cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    const script = document.createElement('script');
+    window[cb] = (data) => { delete window[cb]; document.head.removeChild(script); resolve(data); };
+    script.onerror = () => { delete window[cb]; document.head.removeChild(script); reject(new Error('接続失敗')); };
+    script.src = `${GAS_URL}?${params}&callback=${cb}`;
+    document.head.appendChild(script);
+  });
+}
+
+// アイコンのタップカウント
+document.getElementById('panIcon').addEventListener('click', () => {
+  tapCount++;
+  const icon = document.getElementById('panIcon');
+  icon.classList.remove('tapped');
+  void icon.offsetWidth;
+  icon.classList.add('tapped');
+  clearTimeout(tapTimer);
+  if (tapCount >= 10) {
+    tapCount = 0;
+    openModal();
+  } else {
+    tapTimer = setTimeout(() => { tapCount = 0; }, 2000);
+  }
+});
+
+function openModal() {
+  document.getElementById('passInput').value = '';
+  document.getElementById('modalError').textContent = '';
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('passInput').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+async function submitPassword() {
+  const pass = document.getElementById('passInput').value.trim();
+  if (!pass) return;
+  document.getElementById('modalError').textContent = '';
 
   try {
-    const res = await fetch(GAS_URL);
-    const links = await res.json();
+    const [allLinks, publicLinks] = await Promise.all([
+      fetchGAS(`action=list&pass=${encodeURIComponent(pass)}`),
+      fetchGAS('action=list')
+    ]);
+    if (allLinks.length > publicLinks.length) {
+      currentPass = pass;
+      localStorage.setItem('frypan_pass', pass);
+      closeModal();
+      renderLinks(allLinks);
+      document.getElementById('footer').textContent = `${allLinks.length} tools (unlocked)`;
+    } else {
+      document.getElementById('modalError').textContent = 'パスワードが違うか、追加リンクがありません';
+    }
+  } catch(e) {
+    document.getElementById('modalError').textContent = '読み込みに失敗しました';
+  }
+}
 
-    status.style.display = "none";
+// Enterキーで送信
+document.getElementById('passInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitPassword();
+});
 
+// モーダル外クリックで閉じる
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+function renderLinks(links) {
+  const linksEl = document.getElementById('links');
+  linksEl.innerHTML = '';
+  links.forEach(({ name, url, isPrivate }, i) => {
+    const a = document.createElement('a');
+    a.className = 'card' + (isPrivate ? ' private' : '');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.animationDelay = `${i * 0.07}s`;
+    a.innerHTML = `<span class="card-name">${name}</span><span class="card-arrow">→</span>`;
+    linksEl.appendChild(a);
+  });
+}
+
+async function load() {
+  const status = document.getElementById('status');
+  try {
+    const params = currentPass ? `action=list&pass=${encodeURIComponent(currentPass)}` : 'action=list';
+    const links = await fetchGAS(params);
+    status.style.display = 'none';
     if (links.length === 0) {
-      status.style.display = "flex";
-      status.innerHTML = "スプレッドシートにリンクがありません";
+      status.style.display = 'flex';
+      status.innerHTML = 'リンクがありません';
       return;
     }
-
-    links.forEach(({ name, url }, i) => {
-      const a = document.createElement("a");
-      a.className = "card";
-      a.href = url;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.style.animationDelay = `${i * 0.07}s`;
-      a.innerHTML = `
-        <span class="card-name">${name}</span>
-        <span class="card-arrow">→</span>
-      `;
-      linksEl.appendChild(a);
-    });
-
-    footer.textContent = `${links.length} tools`;
-
-  } catch (e) {
+    renderLinks(links);
+    const unlocked = currentPass && links.length > 0;
+    document.getElementById('footer').textContent = `${links.length} tools${unlocked ? ' (unlocked)' : ''}`;
+  } catch(e) {
+    // 保存済みパスワードが無効になった可能性があるのでクリア
+    localStorage.removeItem('frypan_pass');
+    currentPass = '';
     status.innerHTML = '<span>読み込みに失敗しました</span>';
-    console.error(e);
   }
 }
 
